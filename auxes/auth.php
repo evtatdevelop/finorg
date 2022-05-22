@@ -7,6 +7,6 @@
     
     function auth($key){
         global $keys;
-        if (!in_array(cleanData($key), $keys)) return false;  	
+        if ( !in_array(cleanData($key), $keys) ) return false;  	
 		return true;
 	}

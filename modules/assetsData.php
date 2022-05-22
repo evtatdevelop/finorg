@@ -6,3 +6,4 @@
         $props['sql'] = "SELECT id, currensy, value, status, type, time FROM assets";
         return select( $props );   
     }
+    
