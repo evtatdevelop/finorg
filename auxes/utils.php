@@ -1,5 +1,5 @@
 <?php
-    function debug($var, $simple = true) {
+    function dump($var, $simple = true) {
         echo '<pre>';
             if ($simple)
                 print_r($var);
