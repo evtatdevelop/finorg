@@ -1,5 +1,4 @@
 <?php
-
     function connect() { return new mysqli("localhost", "root", "", "finorg"); }
 
     function select( $props ) {
