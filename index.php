@@ -7,7 +7,7 @@
     $props = $_GET;
     if ( !checkDataSet($props, ['key']) or !auth($props['key']) ) die;
     header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET, POST');
+    header('Access-Control-Allow-Methods: GET, POST, PATCH');
     header("Access-Control-Allow-Headers: Content-type");
     header('Content-Type: application/x-javascript; charset=utf8');
     echo json_encode( $props['data']( $props ) );

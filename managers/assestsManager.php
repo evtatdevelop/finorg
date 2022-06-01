@@ -3,3 +3,4 @@
 
     function assets( $props ) { return getAssrets( $props ); }
     function asset( $props ) { return getOneAsset( $props )[0]; }
+    function saveAsset( $props ) { return setAsset(); }
