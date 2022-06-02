@@ -5,8 +5,10 @@
         'N7Ej1YO2kqFH2FnqNiKA6tm980bwMS',
     ];
     
-    function auth($key){
+    function auth(){
         global $keys;
-        if ( !in_array(cleanData($key), $keys) ) return false;  	
+        $key = getallheaders()['API-Key'];
+        if ( !in_array(cleanData($key), $keys) ) return false;
+        // if ( !in_array(cleanData(getallheaders()['API-Key']), $keys) ) return false;
 		return true;
 	}
