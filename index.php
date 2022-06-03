@@ -5,10 +5,10 @@
     require_once( 'managers/assestsManager.php' );
 
     header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET, POST, PATCH');
-    header("Access-Control-Allow-Headers: Content-type,,API-Key");
+    header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE');
+    header("Access-Control-Allow-Headers: Content-type, API-Key");
     header('Content-Type: application/x-javascript; charset=utf8');
-
+    
+    if ( !auth() ) die;
     $props = $_GET;
-    if ( !checkDataSet($props, []) or !auth() ) die;
     echo json_encode( $props['data']( $props ) );

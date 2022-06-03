@@ -15,9 +15,7 @@
 
     function setAsset() {
         $props = json_decode( file_get_contents( 'php://input' ), true );
-        // $props['method'] = $_SERVER['REQUEST_METHOD'];
         $where = sprintf("id = '%d'", $props['id']);
-        
         $currensy = $props['currensy'];
         $status = $props['status'];
         $type = $props['type'];
