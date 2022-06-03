@@ -2,27 +2,22 @@
     require_once( 'db/mysql.php'           );
     require_once( './auxes/validation.php' );
 
-    function getAssrets( $props ) {
-        $props['sql'] = "SELECT id, currensy, value, status, type, time FROM assets";
+    function getAssrets( $props ) {       
+        $props['data'] = ['id', 'currensy', 'value', 'status', 'type', 'time'];
         return select( $props );   
     }
 
     function getOneAsset( $props ) {
-        $props['sql'] = "SELECT id, currensy, value, status, type, time FROM assets where " . sprintf("id = '%d'", $props['id']);
-        return select( $props ); 
+        $props['data'] = ['id', 'currensy', 'value', 'status', 'type', 'time'];
+        return select( $props )[0]; 
     }
 
     function setAsset( $props ) {
-        $data = json_decode( file_get_contents( 'php://input' ), true );
-        // todo isset id check  
-        $data['time'] = round(microtime(true) * 1000);
-        $props['data'] = $data;
+        $props['data']['time'] = round(microtime(true) * 1000);
         return update( $props );
     }
     
     function addAsset( $props ) {
-        $data = json_decode( file_get_contents( 'php://input' ), true );
-        $data['time'] = round(microtime(true) * 1000);
-        $props['data'] = $data;
+        $props['data']['time'] = round(microtime(true) * 1000);
         return insert( $props );
     }
