@@ -8,20 +8,21 @@
     }
 
     function getOneAsset( $props ) {
-        $where = sprintf("id = '%d'", $props['id']);
-        $props['sql'] = "SELECT id, currensy, value, status, type, time FROM assets where $where";
+        $props['sql'] = "SELECT id, currensy, value, status, type, time FROM assets where " . sprintf("id = '%d'", $props['id']);
         return select( $props ); 
     }
 
-    function setAsset() {
-        $props = json_decode( file_get_contents( 'php://input' ), true );
-        $where = sprintf("id = '%d'", $props['id']);
-        $currensy = $props['currensy'];
-        $status = $props['status'];
-        $type = $props['type'];
-        $value = $props['value'];
-        $time = microtime(true)*1000;
-        $props['sql'] = "UPDATE assets SET currensy = '$currensy', status = '$status', type = '$type', value = $value, time = $time where $where";
-        update( $props ); 
-        return $props;
-      }
+    function setAsset( $props ) {
+        $data = json_decode( file_get_contents( 'php://input' ), true );
+        // todo isset id check  
+        $data['time'] = round(microtime(true) * 1000);
+        $props['data'] = $data;
+        return update( $props );
+    }
+    
+    function addAsset( $props ) {
+        $data = json_decode( file_get_contents( 'php://input' ), true );
+        $data['time'] = round(microtime(true) * 1000);
+        $props['data'] = $data;
+        return insert( $props );
+    }

@@ -11,4 +11,4 @@
     
     if ( !auth() ) die;
     $props = $_GET;
-    echo json_encode( $props['data']( $props ) );
+    echo json_encode( $props['q']( $props ) );
