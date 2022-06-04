@@ -12,7 +12,7 @@
                 $props['data'] = json_decode( file_get_contents( 'php://input' ), true );
                 if ( $method == 'PATCH' ) return setAsset( $props );
                 else return addAsset( $props );
-            case 'DELETE': break;
+            case 'DELETE': return dellAsset( $props );
             default: break;
         }
     }

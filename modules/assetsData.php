@@ -21,3 +21,7 @@
         $props['data']['time'] = round(microtime(true) * 1000);
         return insert( $props );
     }
+    
+    function dellAsset( $props ) {
+        return delete( $props );
+    }
