@@ -1,4 +1,5 @@
 <?php
+    require_once( 'config.php'                  );
     require_once( 'auxes/utils.php'             );
     require_once( 'auxes/validation.php'        );
     require_once( 'auxes/auth.php'              );
