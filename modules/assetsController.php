@@ -32,6 +32,6 @@
         $data['currensy'] = mb_substr( mb_strtoupper( rus2translit( $data['currensy'] ), 'UTF-8' ), 0, 3, 'utf-8' );
         $data['value'] = $data['value'] < 0 ? 0 : intval( round( $data['value'] ));
         $data['type'] = in_array($data['type'], $config['currensy']['type']) ? $data['type'] : 'cash';
-        $data['status'] = in_array($data['status'], $config['currensy']['status']) ? $data['status'] : 'active';
+        $data['status'] = !empty($data['status']) ? $data['status'] : 'active';
         return $data;
     }

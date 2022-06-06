@@ -32,8 +32,8 @@
         $sqlPart = ") VALUES (";
         foreach ( $props['data'] as $key => $val ) { $sql .= "$key, "; $sqlPart .= "'$val', "; }
         $sql = substr($sql, 0, -2) . substr($sqlPart, 0, -2) . ")";
-        $props['data']['id'] = $conn->insert_id;
         $result = $conn->query( $sql ) ? $props['data'] : null;
+        $result['id'] = $conn->insert_id;
         $conn->close();
         return $result;
     }

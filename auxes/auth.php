@@ -1,13 +1,7 @@
 <?php
-    $keys = [
-        'fL1XVQ5CeeyZ6sBcQlgthfoXeZDxqY',
-        'CrgFJ2MlXCB1JZXw94kqzg3fZZL1wK',
-        'N7Ej1YO2kqFH2FnqNiKA6tm980bwMS',
-    ];
-    
     function auth() {
-        global $keys;
+        global $config;
         $key = getallheaders()['API-Key'];
-        if ( !in_array(cleanData($key), $keys) ) return false;
+        if ( !in_array(cleanData($key), $config['keys']) ) return false;
         return true;
 	}
