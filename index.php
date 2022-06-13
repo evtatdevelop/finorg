@@ -1,9 +1,10 @@
 <?php
-    require_once( 'config.php'                  );
-    require_once( 'auxes/utils.php'             );
-    require_once( 'auxes/validation.php'        );
-    require_once( 'auxes/auth.php'              );
-    require_once( 'managers/assestsManager.php' );
+    require_once( 'config.php'                      );
+    require_once( 'auxes/utils.php'                 );
+    require_once( 'auxes/validation.php'            );
+    require_once( 'auxes/auth.php'                  );
+    require_once( 'managers/assestsManager.php'     );
+    require_once( 'managers/organizerManager.php'   );
 
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE');
