@@ -5,9 +5,9 @@
         $method = $_SERVER['REQUEST_METHOD'];
         switch ( $method ) {
             case 'GET': return getEvents( $props ); 
-            // case 'POST': return addAsset( $props );
-            // case 'PATCH': return setAsset( $props );
-            // case 'DELETE': return dellAsset( $props );
+            case 'POST': return addEventt( $props );
+            case 'PATCH': return setEvent( $props );
+            case 'DELETE': return dellEvent( $props );
             default: break;
         }
     }

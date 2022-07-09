@@ -9,7 +9,7 @@
 	}
 
 	function cleanData( $data ) {
-		if ( !$data ) return null;
+		// if ( !$data ) return null; // ! brake event value
 		if ( ctype_digit( (string)$data )) return abs( (int)$data );
 		else return trim( htmlspecialchars( strip_tags( $data )));
 	}

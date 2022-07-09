@@ -3,35 +3,33 @@
     require_once( './auxes/validation.php' );
 
     function getEvents( $props ) {       
-        $props['data'] = ['id', 'date', 'name', 'description', 'value', 'status', 'mode', 'start', 'expiration'];
+        $props['data'] = ['id', 'date', 'name', 'description', 'type', 'value', 'status', 'cash'];
         return select( $props );
     }
 
-    // function getOneAsset( $props ) {
-    //     $props['data'] = ['id', 'currensy', 'value', 'status', 'type', 'time'];
-    //     return select( $props )[0]; 
-    // }
-
-    // function setAsset( $props ) {
-    //     $props['data'] = normalizAssetsData( json_decode( file_get_contents( 'php://input' ), true ) );
-    //     return update( $props );
-    // }
+    function setEvent( $props ) {
+        $props['data'] = normalizEventData( json_decode( file_get_contents( 'php://input' ), true ) );
+        return update( $props );
+    }
     
-    // function addAsset( $props ) {
-    //     $props['data'] = normalizAssetsData( json_decode( file_get_contents( 'php://input' ), true ) );
-    //     return insert( $props );
-    // }
+    function addEventt( $props ) {
+        $props['data'] = normalizEventData( json_decode( file_get_contents( 'php://input' ), true ) );
+        $props['data']['status'] = 'active';
+        return insert( $props );
+    }
     
-    // function dellAsset( $props ) {
-    //     return delete( $props );
-    // }
+    function dellEvent( $props ) {
+        return delete( $props );
+    }
 
-    // function normalizAssetsData( $data ) {
-    //     global $config;
-    //     $data['time'] = round(microtime(true) * 1000);
-    //     $data['currensy'] = mb_substr( mb_strtoupper( rus2translit( $data['currensy'] ), 'UTF-8' ), 0, 3, 'utf-8' );
-    //     $data['value'] = $data['value'] < 0 ? 0 : intval( round( $data['value'] ));
-    //     $data['type'] = in_array($data['type'], $config['currensy']['type']) ? $data['type'] : 'cash';
-    //     $data['status'] = !empty($data['status']) ? $data['status'] : 'active';
-    //     return $data;
-    // }
+    function normalizEventData( $data ) {
+        // global $config;
+        $data['date']         = (int) $data['date'];
+        $data['name']         = (string) $data['name'];
+        $data['type']         = (string) $data['type'];
+        $data['value']        = $data['type'] == 'event' ? null : ( (bool) $data['value'] ? cleanData($data['value']) : 0 );       
+        $data['cash']         = (bool) $data['cash'] ? (string) $data['cash'] : null;
+        $data['description']  = (bool) trim($data['description']) ? (string) trim($data['description']) : null;
+        $data['status']       = isset($data['status']) && (bool) trim($data['status']) ? (string) trim($data['status']) : 'active';
+        return $data;
+    }
