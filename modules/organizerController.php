@@ -3,7 +3,7 @@
     require_once( './auxes/validation.php' );
 
     function getEvents( $props ) {       
-        $props['data'] = ['id', 'date', 'name', 'description', 'type', 'value', 'status', 'cash'];
+        $props['data'] = ['id', 'date', 'name', 'description', 'type', 'value', 'status', 'cash', 'mode'];
         return select( $props );
     }
 
@@ -31,5 +31,6 @@
         $data['cash']         = (bool) $data['cash'] ? (string) $data['cash'] : null;
         $data['description']  = (bool) trim($data['description']) ? (string) trim($data['description']) : null;
         $data['status']       = isset($data['status']) && (bool) trim($data['status']) ? (string) trim($data['status']) : 'active';
+        $data['mode']         = 'onetime'; 
         return $data;
     }
