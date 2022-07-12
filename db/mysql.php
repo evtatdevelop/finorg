@@ -19,13 +19,21 @@
         foreach ( $props['data'] as $val ) $sql .= "$val, ";
         $sql = substr($sql, 0, -2);
         $sql .= " FROM ". cleanData( $props['q'] );
-        
-        //TODO:
-        $sql .= isset( $props['id'] ) ? " WHERE " . sprintf("id = '%d'", $props['id']) : '';
-        $sql .= (isset( $props['from'] ) and isset( $props['to'] )) 
-            ? " WHERE date BETWEEN " . sprintf("%d", $props['from']) . " AND " . sprintf("%d", $props['to']) . " ORDER BY date"
-            : '';
-        
+
+        $where = '';
+        if ( isset( $props['id'] ) 
+            or (isset( $props['from'] ) and isset( $props['to'] ))
+            or isset( $props['where'] )
+        ) {
+            $where .= " WHERE ";
+            if ( isset( $props['id'] )) $where .=  sprintf("id = '%d'", $props['id']);
+            if ( isset( $props['where'] )) $where .=  " {$props['where'] }";
+            if (isset( $props['from'] ) and isset( $props['to'] )) $where .=  "date BETWEEN " . sprintf("%d", $props['from']) . " AND " . sprintf("%d", $props['to']) . " ORDER BY date";
+        }
+        $sql .= $where;
+
+
+
         if ( $data = $conn->query($sql) ) foreach ( $data as $row ) $result[] = $row;
         $conn->close();
         // $props['sql'] = $sql;

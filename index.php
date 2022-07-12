@@ -5,7 +5,6 @@
     require_once( 'auxes/auth.php'                  );
     require_once( 'managers/assestsManager.php'     );
     require_once( 'managers/organizerManager.php'   );
-    require_once( 'managers/regularsManager.php'   );
 
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE');
