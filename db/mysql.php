@@ -20,6 +20,7 @@
         $sql = substr($sql, 0, -2);
         $sql .= " FROM ". cleanData( $props['q'] );
 
+        // !TODO
         $where = '';
         if ( isset( $props['id'] ) 
             or (isset( $props['from'] ) and isset( $props['to'] ))
@@ -31,8 +32,6 @@
             if (isset( $props['from'] ) and isset( $props['to'] )) $where .=  "date BETWEEN " . sprintf("%d", $props['from']) . " AND " . sprintf("%d", $props['to']) . " ORDER BY date";
         }
         $sql .= $where;
-
-
 
         if ( $data = $conn->query($sql) ) foreach ( $data as $row ) $result[] = $row;
         $conn->close();

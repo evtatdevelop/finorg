@@ -11,3 +11,14 @@
             default: break;
         }
     }
+    
+    function regulars( $props ) {
+        $method = $_SERVER['REQUEST_METHOD'];
+        switch ( $method ) {
+            case 'GET': return getRegulars( $props ); 
+            case 'POST': return addRegulars( $props );
+            case 'PATCH': return setRegulars( $props );
+            case 'DELETE': return dellRegulars( $props );
+            default: break;
+        }
+    }   
