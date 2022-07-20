@@ -75,5 +75,7 @@
         $sql = "DELETE FROM ". cleanData( $props['q'] ) ." WHERE " . sprintf("id = '%d'", $props['id']);
         $result = $conn->query( $sql ) ? $props['id'] : null;
         $conn->close();
+        // $props['sql'] = $sql;
+        // return $props;
         return $result;
     }

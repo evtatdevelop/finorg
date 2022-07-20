@@ -85,9 +85,20 @@
     }
 
 
+
     function setRegulars( $props ) {
         $props['data'] = normalizEventData( json_decode( file_get_contents( 'php://input' ), true ) );
         return update( $props );
+    }
+
+    function addRegulars( $props ) {
+        $props['data'] = normalizEventData( json_decode( file_get_contents( 'php://input' ), true ) );
+        $props['data']['status'] = 'active';
+        return insert( $props );
+    }
+    
+    function dellRegulars( $props ) {
+        return delete( $props );
     }
 
     function normalizEventData( $data ) {
@@ -99,6 +110,7 @@
             $data['date_to']    = (bool) $data['date_to'] ? (int) $data['date_to'] : null;
             $data['period']     = (string) $data['period'];
             $data['last_date']  = (int) $data['last_date'];
+            $data['code']  =      keyGen(7);
         }
         $data['name']         = (string) $data['name'];
         $data['type']         = (string) $data['type'];
