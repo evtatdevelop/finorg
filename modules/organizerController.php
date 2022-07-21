@@ -47,7 +47,7 @@
            $regEventTo     = (bool) $regEvent['date_to'] ? (int) $regEvent['date_to'] : null;
            $regEventPeriod = (string) $regEvent['period'];
            $date = $regEventFrom;
-           while ( $date <= $monthTo ) { 
+           while ( $date <= $monthTo and ($date <= $regEventTo or !$regEventTo)) { 
             if ( $date >= $monthFrom ) array_push($result, [
                 "id" => $regEvent['id'] .'-'. $date,
                 "date" => $date,
@@ -98,7 +98,11 @@
     }
     
     function dellRegulars( $props ) {
-        return delete( $props );
+        $props['q'] = 'regulars';
+        $props['data'] = ['id', 'name', 'code', 'date_from', 'date_to', 'last_date', 'period', 'type', 'value', 'cash', 'description', 'status', 'mode'];
+        $props['data'] = select( $props )[0];
+        $props['data']['date_to'] = time()*1000;
+        return update( $props );
     }
 
     function normalizEventData( $data ) {
