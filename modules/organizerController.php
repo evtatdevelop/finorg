@@ -28,7 +28,7 @@
     }
 
     function getOneimeEvents( $props ) {
-        $props['data'] = ['id', 'date', 'name', 'description', 'type', 'value', 'status', 'cash', 'mode'];
+        $props['data'] = ['id', 'date', 'name', 'description', 'type', 'value', 'status', 'cash', 'mode', 'currency'];
         return select( $props );       
     }
 
@@ -37,7 +37,7 @@
         $monthFrom   = (int) $props['from'];
         $monthTo     = (int) $props['to'];
         // $props['q'] = 'regulars';
-        $props['data'] = ['id', 'name', 'code', 'date_from', 'date_to', 'last_date', 'period', 'type', 'value', 'cash', 'description', 'status', 'mode'];
+        $props['data'] = ['id', 'name', 'code', 'date_from', 'date_to', 'last_date', 'period', 'type', 'value', 'cash', 'description', 'status', 'mode', 'currency'];
         $props['where'] = "status = 'active'";
         unset( $props['from'] );
         unset( $props['to'] );
@@ -57,6 +57,7 @@
                 "description" => $regEvent['description'],
                 "type" => $regEvent['type'],
                 "value" => $regEvent['value'],
+                "currency" => $regEvent['currency'],
                 "status" => $regEvent['status'],
                 "cash" => $regEvent['cash'],
                 "mode" => $regEvent['mode'],
@@ -118,7 +119,8 @@
         }
         $data['name']         = (string) $data['name'];
         $data['type']         = (string) $data['type'];
-        $data['value']        = $data['type'] == 'event' ? null : ( (bool) $data['value'] ? cleanData($data['value']) : 0 );       
+        $data['value']        = $data['type'] == 'event' ? null : ( (bool) $data['value'] ? cleanData($data['value']) : 0 );
+        $data['currency']     = mb_substr( mb_strtoupper( rus2translit( $data['currency'] ), 'UTF-8' ), 0, 3, 'utf-8' );
         $data['cash']         = (bool) $data['cash'] ? (string) $data['cash'] : null;
         $data['description']  = (bool) trim($data['description']) ? (string) trim($data['description']) : null;
         $data['status']       = isset($data['status']) && (bool) trim($data['status']) ? (string) trim($data['status']) : 'active';
