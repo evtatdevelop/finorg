@@ -47,8 +47,11 @@
            $regEventTo     = (bool) $regEvent['date_to'] ? (int) $regEvent['date_to'] : null;
            $regEventPeriod = (string) $regEvent['period'];
            $date = $regEventFrom;
-           while ( $date <= $monthTo and ($date <= $regEventTo or !$regEventTo)) { 
-            if ( $date >= $monthFrom ) array_push($result, [
+           while ( $date <= $monthTo) { 
+            if ( $date >= $monthFrom and 
+                ($date <= $regEventTo or !$regEventTo)
+                and $regEvent['last_date'] < $date      // ! except accepted
+                ) array_push($result, [
                 "id" => $regEvent['id'] .'-'. $date,
                 "date" => $date,
                 "date_from" => $regEventFrom,
@@ -88,7 +91,28 @@
 
 
     function setRegulars( $props ) {
-        $props['data'] = normalizEventData( json_decode( file_get_contents( 'php://input' ), true ) );
+        $data = normalizEventData( json_decode( file_get_contents( 'php://input' ), true ) );
+        $props['q'] = 'regulars';
+        $props['id'] = $data['id'];
+        $props['data'] = ['last_date'];
+        $props['prev_data'] = select( $props )[0]['last_date'];
+        $props['data'] = $data;
+        if ( $props['data']['last_date'] != $props['prev_data'] ) {
+            // ? Add case when two dates of one reg-event exist
+            // ? Add case accepting before reg-event date
+            $props['q'] = 'events';
+            $props['data']['date'] = time()*1000;
+            $props['data']['status'] = 'success';
+            unset( $props['data']['id'] );
+            unset( $props['data']['date_from'] );
+            unset( $props['data']['date_to'] );
+            unset( $props['data']['period'] );
+            unset( $props['data']['last_date'] );
+            unset( $props['data']['code'] );
+            insert( $props );
+            $props['data'] = $data;
+        }        
+        $props['q'] = 'regulars';
         return update( $props );
     }
 
