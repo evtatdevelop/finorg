@@ -48,9 +48,11 @@
            $regEventPeriod = (string) $regEvent['period'];
            $date = $regEventFrom;
            while ( $date <= $monthTo) { 
-            if ( $date >= $monthFrom and 
-                ($date <= $regEventTo or !$regEventTo)
-                and $regEvent['last_date'] < $date      // ! except accepted
+            if ( $date >= $monthFrom and                                                                    // alredy work
+                ($date <= $regEventTo or !$regEventTo)                                                      // work yet 
+                // and $regEvent['last_date'] + (getNextDate( $date, $regEventPeriod) - $date) < $date      // ? last_date + period 
+                and ( $regEvent['last_date'] == $date
+                || $regEvent['last_date'] + (getNextDate( $date, $regEventPeriod) - $date) <= $date )
                 ) array_push($result, [
                 "id" => $regEvent['id'] .'-'. $date,
                 "date" => $date,
@@ -144,7 +146,7 @@
         $data['name']         = (string) $data['name'];
         $data['type']         = (string) $data['type'];
         $data['value']        = $data['type'] == 'event' ? null : ( (bool) $data['value'] ? cleanData($data['value']) : 0 );
-        $data['currency']     = mb_substr( mb_strtoupper( rus2translit( $data['currency'] ), 'UTF-8' ), 0, 3, 'utf-8' );
+        $data['currency']     = isset($data['currency']) ? mb_substr( mb_strtoupper( rus2translit( $data['currency'] ), 'UTF-8' ), 0, 3, 'utf-8' ) : null;
         $data['cash']         = (bool) $data['cash'] ? (string) $data['cash'] : null;
         $data['description']  = (bool) trim($data['description']) ? (string) trim($data['description']) : null;
         $data['status']       = isset($data['status']) && (bool) trim($data['status']) ? (string) trim($data['status']) : 'active';
