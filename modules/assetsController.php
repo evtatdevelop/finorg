@@ -1,10 +1,33 @@
 <?php
     require_once( 'db/mysql.php'           );
     require_once( './auxes/validation.php' );
+    require_once( 'organizerController.php' );
 
     function getAssrets( $props ) {       
         $props['data'] = ['id', 'currensy', 'value', 'status', 'type', 'time'];
-        return select( $props );   
+        $assets = select( $props );
+        
+        // dump($assets);
+        // dump($events);
+
+        $props['q'] = 'events';
+        $events = getOneTimeEvents( $props );
+        // dump($events);
+
+        foreach ( $assets as &$asset ) {
+            foreach ( $events as $event ) {
+                if ( $event['date'] >= $asset['time'] and $event['date'] < time()*1000 
+                    and $event['status'] == 'success'
+                    and $event['currency'] == $asset['currensy']
+                    and $event['cash'] == $asset['type']
+                ) {
+                    if ( $event['type'] == 'costs' ) $asset['value'] -= $event['value'];
+                    if ( $event['type'] == 'profit' ) $asset['value'] += $event['value'];
+                }
+            }
+        }
+
+        return $assets; 
     }
 
     function getOneAsset( $props ) {

@@ -19,7 +19,7 @@
     }
 
     function getEvents( $props ) {
-        $events = getOneimeEvents( $props );
+        $events = getOneTimeEvents( $props );
         $props['q'] = 'regulars';
         $regulars = getRegulars( $props );
         $eventsArr = array_merge($events, $regulars);
@@ -27,7 +27,7 @@
         return $eventsArr;
     }
 
-    function getOneimeEvents( $props ) {
+    function getOneTimeEvents( $props ) {
         $props['data'] = ['id', 'date', 'name', 'description', 'type', 'value', 'status', 'cash', 'mode', 'currency'];
         return select( $props );       
     }
@@ -50,10 +50,11 @@
            while ( $date <= $monthTo) { 
             if ( $date >= $monthFrom and                                                                    // alredy work
                 ($date <= $regEventTo or !$regEventTo)                                                      // work yet 
-                // and $regEvent['last_date'] + (getNextDate( $date, $regEventPeriod) - $date) < $date      // ? last_date + period 
                 and ( $regEvent['last_date'] == $date
-                || $regEvent['last_date'] + (getNextDate( $date, $regEventPeriod) - $date) <= $date )
-                ) array_push($result, [
+                    // || $regEvent['last_date'] + (getNextDate( $date, $regEventPeriod) - $date) <= $date 
+                    || $regEvent['last_date']  <= $date 
+                )
+            ) array_push($result, [
                 "id" => $regEvent['id'] .'-'. $date,
                 "date" => $date,
                 "date_from" => $regEventFrom,
