@@ -5,12 +5,13 @@
 
     function getAssrets( $props ) {       
         $props['data'] = ['id', 'currensy', 'value', 'status', 'type', 'time'];
+        $props['order'] = "queue";
         $assets = select( $props );
         
         // dump($assets);
-        // dump($events);
 
         $props['q'] = 'events';
+        unset( $props['order'] );
         $events = getOneTimeEvents( $props );
         // dump($events);
 

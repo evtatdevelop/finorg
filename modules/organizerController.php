@@ -50,10 +50,10 @@
            while ( $date <= $monthTo) { 
             if ( $date >= $monthFrom and                                                                    // alredy work
                 ($date <= $regEventTo or !$regEventTo)                                                      // work yet 
-                and ( $regEvent['last_date'] == $date
+                // and ( $regEvent['last_date'] == $date
                     // || $regEvent['last_date'] + (getNextDate( $date, $regEventPeriod) - $date) <= $date 
-                    || $regEvent['last_date']  <= $date 
-                )
+                    and $date > $regEvent['last_date'] 
+                // )
             ) array_push($result, [
                 "id" => $regEvent['id'] .'-'. $date,
                 "date" => $date,
