@@ -1,5 +1,4 @@
 <?php
-    // require_once( 'modules/assetsData.php' );
     require_once( 'modules/assetsController.php' );
 
     function assets( $props ) {

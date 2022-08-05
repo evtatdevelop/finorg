@@ -35,6 +35,8 @@
 
         if ( isset( $props['order'] ) ) $sql .= " ORDER BY {$props['order'] }";
 
+        // echo($sql);
+
         if ( $data = $conn->query($sql) ) foreach ( $data as $row ) $result[] = $row;
         $conn->close();
         // $props['sql'] = $sql;

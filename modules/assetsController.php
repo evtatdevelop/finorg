@@ -8,16 +8,17 @@
         $props['order'] = "queue";
         $assets = select( $props );
         
-        // dump($assets);
+        // dump($props);
 
         $props['q'] = 'events';
         unset( $props['order'] );
+        unset( $props['where'] );
         $events = getOneTimeEvents( $props );
         // dump($events);
 
         foreach ( $assets as &$asset ) {
             foreach ( $events as $event ) {
-                if ( $event['date'] >= $asset['time'] and $event['date'] < time()*1000 
+                if ( $event['date'] >= $asset['time'] and $event['date'] <= time()*1000 
                     and $event['status'] == 'success'
                     and $event['currency'] == $asset['currensy']
                     and $event['cash'] == $asset['type']
@@ -33,6 +34,8 @@
 
     function getOneAsset( $props ) {
         $props['data'] = ['id', 'currensy', 'value', 'status', 'type', 'time'];
+
+        // dump($props);
         return select( $props )[0]; 
     }
 

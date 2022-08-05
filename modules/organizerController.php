@@ -29,6 +29,8 @@
 
     function getOneTimeEvents( $props ) {
         $props['data'] = ['id', 'date', 'name', 'description', 'type', 'value', 'status', 'cash', 'mode', 'currency'];
+
+        // dump($props);
         return select( $props );       
     }
 
